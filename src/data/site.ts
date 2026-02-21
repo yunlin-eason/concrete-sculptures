@@ -18,8 +18,8 @@ export const aboutData = {
 從最初的構想、泥塑模型，到最終的水泥澆灌與打磨，每一步都傾注了我的心血。我希望透過這些作品，讓每個經過的人都能感受到藝術的力量。`,
   email: 'yunlin.eason@gmail.com',
   social: {
-    instagram: 'https://instagram.com/s7887177',
-    threads: 'https://threads.net/@s7887177',
+    instagram: 'https://www.instagram.com/eason_li_0701',
+    threads: 'https://www.threads.com/@eason_li_0701',
   },
 };
 
