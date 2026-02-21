@@ -1,0 +1,65 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { mapEmbedUrl } from '../data/site';
+
+interface Props {
+  works: CollectionEntry<'works'>[];
+}
+
+const { works } = Astro.props;
+const sorted = [...works].sort((a, b) => b.data.year - a.data.year);
+---
+
+<section id="map" class="py-20">
+  <div class="container mx-auto max-w-5xl px-4">
+    <h2 class="mb-12 text-center text-3xl font-bold tracking-tight">作品地圖</h2>
+
+    <!-- Embedded Google My Maps -->
+    <div class="mb-12 overflow-hidden rounded-xl border shadow-sm">
+      <iframe
+        src={mapEmbedUrl}
+        width="100%"
+        height="480"
+        style="border:0;"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="作品分佈地圖"
+      ></iframe>
+    </div>
+
+    <!-- Works List -->
+    <div class="overflow-x-auto rounded-xl border">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b bg-muted/50">
+            <th class="px-4 py-3 text-left font-medium">作品名稱</th>
+            <th class="px-4 py-3 text-center font-medium">件數</th>
+            <th class="px-4 py-3 text-center font-medium">年分</th>
+            <th class="px-4 py-3 text-left font-medium">地點</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map((work, i) => (
+            <tr class:list={["border-b last:border-0 transition-colors hover:bg-muted/30", i % 2 === 0 && "bg-muted/10"]}>
+              <td class="px-4 py-3 font-medium">{work.data.title}</td>
+              <td class="px-4 py-3 text-center">{work.data.pieces}</td>
+              <td class="px-4 py-3 text-center">{work.data.year}</td>
+              <td class="px-4 py-3">
+                <a
+                  href={work.data.locationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1 text-primary underline-offset-4 hover:underline"
+                >
+                  {work.data.location}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

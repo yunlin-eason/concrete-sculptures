@@ -1,0 +1,56 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  works: CollectionEntry<'works'>[];
+}
+
+const { works } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const sorted = [...works].sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+---
+
+<section id="works" class="bg-muted/40 py-20">
+  <div class="container mx-auto max-w-5xl px-4">
+    <h2 class="mb-12 text-center text-3xl font-bold tracking-tight">作品集</h2>
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {sorted.map((work) => {
+        const coverSrc = work.data.cover.startsWith('/')
+          ? `${base}${work.data.cover.slice(1)}`
+          : work.data.cover;
+        return (
+          <a
+            href={`${base}works/${work.id}/`}
+            class="group block overflow-hidden rounded-xl border bg-card shadow-sm transition-shadow hover:shadow-md"
+          >
+            <div class="aspect-[4/3] overflow-hidden bg-muted">
+              <img
+                src={coverSrc}
+                alt={work.data.title}
+                class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-5">
+              <div class="mb-2 flex items-center gap-2">
+                <span class="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+                  {work.data.year}
+                </span>
+                <span class="text-xs text-muted-foreground">{work.data.location}</span>
+              </div>
+              <h3 class="mb-2 text-lg font-semibold tracking-tight group-hover:text-primary transition-colors">
+                {work.data.title}
+              </h3>
+              <p class="text-sm text-muted-foreground line-clamp-2">
+                {work.data.excerpt}
+              </p>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</section>

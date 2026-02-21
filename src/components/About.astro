@@ -1,0 +1,70 @@
+---
+import { aboutData } from '../data/site';
+
+const base = import.meta.env.BASE_URL;
+const photoSrc = aboutData.photo.startsWith('/') 
+  ? `${base}${aboutData.photo.slice(1)}` 
+  : aboutData.photo;
+---
+
+<section id="about" class="py-20">
+  <div class="container mx-auto max-w-5xl px-4">
+    <h2 class="mb-12 text-center text-3xl font-bold tracking-tight">關於我</h2>
+    <div class="grid gap-12 md:grid-cols-[300px_1fr]">
+      <!-- Photo -->
+      <div class="flex flex-col items-center gap-6">
+        <div class="h-72 w-72 overflow-hidden rounded-2xl bg-muted">
+          <img
+            src={photoSrc}
+            alt={aboutData.name}
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="text-xl font-semibold">{aboutData.name}</h3>
+      </div>
+
+      <!-- Story & Contact -->
+      <div class="flex flex-col justify-center gap-6">
+        <div class="space-y-4 text-muted-foreground leading-relaxed">
+          {aboutData.story.split('\n\n').map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+
+        <!-- Contact -->
+        <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          <a href={`mailto:${aboutData.email}`} class="inline-flex items-center gap-2 text-muted-foreground transition-colors hover:text-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            {aboutData.email}
+          </a>
+          {aboutData.phone && (
+            <a href={`tel:${aboutData.phone}`} class="inline-flex items-center gap-2 text-muted-foreground transition-colors hover:text-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              {aboutData.phone}
+            </a>
+          )}
+        </div>
+
+        <!-- Social -->
+        <div class="flex gap-4">
+          {aboutData.social.instagram && (
+            <a href={aboutData.social.instagram} target="_blank" rel="noopener noreferrer" class="rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-primary" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </a>
+          )}
+          {aboutData.social.facebook && (
+            <a href={aboutData.social.facebook} target="_blank" rel="noopener noreferrer" class="rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-primary" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+          )}
+          {aboutData.social.youtube && (
+            <a href={aboutData.social.youtube} target="_blank" rel="noopener noreferrer" class="rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-primary" aria-label="YouTube">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
