@@ -1,7 +1,7 @@
 ---
 title: "香菇觀光工廠"
 pieces: 2
-cover: "/images/works/placeholder.svg"
+cover: "/images/works/mushroom-factory.jpg"
 excerpt: "香菇觀光工廠的水泥雕塑，共兩件。"
 ---
 

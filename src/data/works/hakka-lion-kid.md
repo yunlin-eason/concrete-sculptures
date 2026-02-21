@@ -3,7 +3,7 @@ title: "客家文化館開口獅小子"
 pieces: 2
 location: "崙背"
 locationUrl: "https://maps.app.goo.gl/2FvsyEADWAApmPTP9"
-cover: "/images/works/placeholder.svg"
+cover: "/images/works/hakka-lion-kid.jpg"
 excerpt: "崙背客家文化館的開口獅小子水泥雕塑，共兩件。"
 ---
 

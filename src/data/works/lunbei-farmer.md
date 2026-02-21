@@ -2,7 +2,7 @@
 title: "崙背農夫"
 pieces: 2
 location: "崙背豐榮"
-cover: "/images/works/placeholder.svg"
+cover: "/images/works/lunbei-farmer.jpg"
 excerpt: "崙背豐榮地區的農夫水泥雕塑，共兩件。"
 ---
 

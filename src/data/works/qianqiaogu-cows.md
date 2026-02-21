@@ -3,7 +3,7 @@ title: "千巧谷乳牛"
 pieces: 14
 location: "崙背"
 locationUrl: "https://maps.app.goo.gl/NGnGo5a8YmsceZXm8"
-cover: "/images/works/placeholder.svg"
+cover: "/images/works/qianqiaogu-cows.jpg"
 excerpt: "千巧谷牛樂園中的大型乳牛群水泥雕塑，共14件。"
 ---
 

@@ -3,7 +3,7 @@ title: "崙背乳牛三太子"
 pieces: 1
 location: "崙背"
 locationUrl: "https://maps.app.goo.gl/AXyCN72buGNxgpsT9"
-cover: "/images/works/placeholder.svg"
+cover: "/images/works/cow-prince.jpg"
 excerpt: "融合乳牛與三太子元素的水泥雕塑。"
 ---
 

@@ -3,8 +3,8 @@
 // ========================================
 
 export const siteConfig = {
-  title: '阿峰雕塑 ',
-  description: '絲瓜連夢露、蒜頭超人作者',
+  title: '阿峰雕塑 (絲瓜連夢露、蒜頭超人作者)',
+  description: '',
   author: '阿峰',
 };
 

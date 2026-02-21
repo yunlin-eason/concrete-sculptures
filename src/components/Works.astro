@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { worksOrder } from '../data/order';
 
 interface Props {
   works: CollectionEntry<'works'>[];
@@ -8,9 +9,12 @@ interface Props {
 const { works } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
-const sorted = [...works].sort(
-  (a, b) => (b.data.year ?? 0) - (a.data.year ?? 0)
-);
+const orderMap = new Map(worksOrder.map((slug, i) => [slug, i]));
+const sorted = [...works].sort((a, b) => {
+  const ia = orderMap.get(a.id) ?? 9999;
+  const ib = orderMap.get(b.id) ?? 9999;
+  return ia - ib;
+});
 ---
 
 <section id="works" class="bg-muted/40 py-20">
