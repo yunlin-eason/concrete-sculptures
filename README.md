@@ -16,10 +16,11 @@ src/
 ├── content.config.ts    # 作品集 Collection 定義
 ├── data/
 │   ├── site.ts          # ★ 網站設定、個人資料、地圖連結
-│   └── works/           # ★ 作品 Markdown 文章
-│       ├── city-pillar.md
-│       ├── wave-stone.md
-│       └── earth-hands.md
+│   └── works/           # ★ 作品 Markdown 文章（23件）
+│       ├── garlic-superhero.md
+│       ├── peanut-kid.md
+│       ├── loofah-monroe.md
+│       └── ...（共23件）
 ├── layouts/
 │   └── Layout.astro     # 全站 Layout
 ├── pages/
@@ -67,15 +68,13 @@ npm run preview
 
 ```ts
 export const aboutData = {
-  name: '你的名字',           // 修改名稱
-  photo: '/images/profile.jpg', // 替換 public/images/profile.jpg
+  name: '阿峰',
+  photo: '/images/profile.jpg',
   story: `你的故事...`,        // 修改自我介紹（用 \n\n 分段）
-  email: 'your@email.com',
-  phone: '+886-xxx-xxx-xxx',
+  email: 'yunlin.eason@gmail.com',
   social: {
-    instagram: 'https://instagram.com/yourprofile',
-    facebook: 'https://facebook.com/yourprofile',
-    youtube: 'https://youtube.com/@yourchannel',
+    instagram: 'https://instagram.com/s7887177',
+    threads: 'https://threads.net/@s7887177',
   },
 };
 ```
@@ -86,10 +85,10 @@ export const aboutData = {
 
 ```ts
 export const mapEmbedUrl =
-  'https://www.google.com/maps/d/u/0/embed?mid=YOUR_MAP_ID&ehbc=2E312F';
+  'https://www.google.com/maps/d/embed?mid=YOUR_MAP_ID&ehbc=2E312F';
 ```
 
-取得方式：Google My Maps → 分享 → 嵌入地圖 → 複製 iframe src 連結。
+取得方式：Google My Maps → 分享 → 嵌入地圖 → 複製 iframe 中 `src` 的 URL。
 
 ### 3. 新增作品
 
@@ -98,18 +97,14 @@ export const mapEmbedUrl =
 ```markdown
 ---
 title: "作品名稱"
-year: 2025
-location: "展出地點"
-locationUrl: "https://maps.google.com/?q=..."
+year: 2025          # 可選
+location: "展出地點" # 可選
+locationUrl: "https://maps.app.goo.gl/..." # 可選，Google Maps 連結
 pieces: 1
-cover: "/images/works/new-work.jpg"
-date: "2025-01-01"
+cover: "/images/works/new-work.jpg" # 可選，預設使用 placeholder
+date: "2025-01-01"  # 可選
 excerpt: "一句話介紹這件作品。"
-lat: 25.0330
-lng: 121.5654
 ---
-
-## 創作理念
 
 你的文章內容（支援 Markdown 語法）...
 ```
@@ -133,7 +128,7 @@ lng: 121.5654
    git init
    git add .
    git commit -m "Initial commit"
-   git remote add origin https://github.com/YOUR_USERNAME/concrete-sculptures.git
+   git remote add origin https://github.com/yunlin-eason/concrete-sculptures.git
    git push -u origin main
    ```
 
@@ -143,7 +138,7 @@ lng: 121.5654
 
    ```js
    export default defineConfig({
-     site: 'https://YOUR_USERNAME.github.io',
+     site: 'https://yunlin-eason.github.io',
      base: '/concrete-sculptures',
      // ...
    });

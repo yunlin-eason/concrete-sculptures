@@ -12,10 +12,10 @@ export async function getStaticPaths() {
 
 const { work } = Astro.props;
 const { Content } = await render(work);
-const base = import.meta.env.BASE_URL;
-const coverSrc = work.data.cover.startsWith('/')
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const coverSrc = work.data.cover?.startsWith('/')
   ? `${base}${work.data.cover.slice(1)}`
-  : work.data.cover;
+  : (work.data.cover || '');
 ---
 
 <Layout title={work.data.title} description={work.data.excerpt}>
@@ -43,19 +43,28 @@ const coverSrc = work.data.cover.startsWith('/')
     <header class="mb-8">
       <h1 class="mb-4 text-4xl font-bold tracking-tight">{work.data.title}</h1>
       <div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-        <span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-          {work.data.year}
-        </span>
+        {work.data.year && (
+          <span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+            {work.data.year}
+          </span>
+        )}
         <span>{work.data.pieces} 件</span>
-        <a
-          href={work.data.locationUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-1 text-primary hover:underline"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-          {work.data.location}
-        </a>
+        {work.data.locationUrl && work.data.locationUrl.startsWith('http') ? (
+          <a
+            href={work.data.locationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 text-primary hover:underline"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            {work.data.location}
+          </a>
+        ) : work.data.location ? (
+          <span class="inline-flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            {work.data.location}
+          </span>
+        ) : null}
       </div>
     </header>
 
