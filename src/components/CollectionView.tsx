@@ -34,7 +34,7 @@ export function CollectionView({
   const [activeSlug, setActiveSlug] = useState(
     initialWorkSlug || works[0]?.slug || ''
   );
-
+  const pieces = works.length;
   const activeWork = works.find((w) => w.slug === activeSlug) || works[0];
 
   const resolveUrl = (src: string) =>
@@ -93,7 +93,7 @@ export function CollectionView({
 
       {/* Work location info (if different from collection-level shown in header) */}
       {!isSingleWork && effectiveLocation && (
-        <div className="mb-4 text-sm text-muted-foreground">
+        <div className="flex gap-4 mb-4 text-sm text-muted-foreground">
           {effectiveLocationUrl && effectiveLocationUrl.startsWith('http') ? (
             <a
               href={effectiveLocationUrl}
@@ -101,12 +101,12 @@ export function CollectionView({
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-primary hover:underline"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
               {effectiveLocation}
             </a>
           ) : (
             <span className="inline-flex items-center gap-1">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
               {effectiveLocation}
             </span>
           )}
@@ -116,22 +116,18 @@ export function CollectionView({
       {/* Work Selector — only for multi-work collections */}
       {!isSingleWork && (
         <div className="mb-8">
-          <h3 className="mb-4 text-lg font-semibold text-muted-foreground">
-            作品列表
-          </h3>
           <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {works.map((work) => (
               <button
                 key={work.slug}
                 onClick={() => setActiveSlug(work.slug)}
-                className={`group flex items-center gap-3 rounded-lg border p-2 text-left transition-all hover:shadow-sm ${
-                  work.slug === activeSlug
+                className={`group flex items-center gap-3 rounded-lg border p-2 text-left transition-all hover:shadow-sm ${work.slug === activeSlug
                     ? 'border-primary bg-primary/5 shadow-sm'
                     : 'border-border hover:border-primary/50'
-                }`}
+                  }`}
               >
                 {work.cover && (
-                  <div className="h-14 w-14 flex-shrink-0 overflow-hidden rounded-md bg-muted">
+                  <div className="h-14 w-14 shrink-0 overflow-hidden rounded-md bg-muted">
                     <img
                       src={resolveUrl(work.cover)}
                       alt={work.title}
@@ -141,11 +137,10 @@ export function CollectionView({
                   </div>
                 )}
                 <span
-                  className={`text-sm font-medium transition-colors ${
-                    work.slug === activeSlug
+                  className={`text-sm font-medium transition-colors ${work.slug === activeSlug
                       ? 'text-primary'
                       : 'group-hover:text-primary'
-                  }`}
+                    }`}
                 >
                   {work.title}
                 </span>

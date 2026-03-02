@@ -21,9 +21,8 @@ export function ImageGallery({
   const [direction, setDirection] = useState(0);
   const [loadStates, setLoadStates] = useState<Record<string, LoadState>>({});
   const [transitioning, setTransitioning] = useState(false);
-  const touchStartX = useRef<number | null>(null);
-  const touchStartY = useRef<number | null>(null);
-  const swiping = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const touchRef = useRef<{ startX: number; startY: number; swiping: boolean } | null>(null);
   const resolveUrl = (src: string) =>
     src.startsWith('/') ? `${base}${src.slice(1)}` : src;
 
@@ -67,36 +66,58 @@ export function ImageGallery({
     setCurrent((c) => Math.min(c + 1, images.length - 1));
   }, [images.length]);
 
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-    touchStartY.current = e.touches[0].clientY;
-    swiping.current = false;
-  }, []);
+  // Native touch listeners (non-passive) so preventDefault actually works
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || images.length <= 1) return;
 
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (touchStartX.current === null || touchStartY.current === null) return;
-    const dx = e.touches[0].clientX - touchStartX.current;
-    const dy = e.touches[0].clientY - touchStartY.current;
-    // Lock to horizontal swipe once threshold is reached
-    if (!swiping.current && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
-      swiping.current = true;
-    }
-    if (swiping.current) {
-      e.preventDefault();
-    }
-  }, []);
+    const onTouchStart = (e: TouchEvent) => {
+      touchRef.current = {
+        startX: e.touches[0].clientX,
+        startY: e.touches[0].clientY,
+        swiping: false,
+      };
+    };
 
-  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (swiping.current) {
-      if (dx < -SWIPE_THRESHOLD) next();
-      else if (dx > SWIPE_THRESHOLD) prev();
-    }
-    touchStartX.current = null;
-    touchStartY.current = null;
-    swiping.current = false;
-  }, [next, prev]);
+    const onTouchMove = (e: TouchEvent) => {
+      const t = touchRef.current;
+      if (!t) return;
+      const dx = e.touches[0].clientX - t.startX;
+      const dy = e.touches[0].clientY - t.startY;
+      if (!t.swiping && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+        t.swiping = true;
+      }
+      if (t.swiping) {
+        e.preventDefault(); // works because listener is { passive: false }
+      }
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      const t = touchRef.current;
+      if (!t) return;
+      const dx = e.changedTouches[0].clientX - t.startX;
+      if (t.swiping) {
+        if (dx < -SWIPE_THRESHOLD) {
+          setDirection(1);
+          setCurrent((c) => Math.min(c + 1, images.length - 1));
+        } else if (dx > SWIPE_THRESHOLD) {
+          setDirection(-1);
+          setCurrent((c) => Math.max(c - 1, 0));
+        }
+      }
+      touchRef.current = null;
+    };
+
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchmove', onTouchMove, { passive: false });
+    el.addEventListener('touchend', onTouchEnd, { passive: true });
+
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchmove', onTouchMove);
+      el.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [images.length]);
 
   if (!images.length) {
     return (
@@ -125,22 +146,19 @@ export function ImageGallery({
   };
 
   return (
-    <div className="relative w-full select-none">
+    <div ref={containerRef} className="relative w-full select-none touch-pan-y">
       <div className="group relative w-full aspect-4/3 max-h-150 overflow-hidden rounded-xl">
 
         <div
         key={images.join(',')}
-        className="relative w-full aspect-4/3 max-h-150 overflow-hidden rounded-xl touch-pan-y"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        className="relative w-full aspect-4/3 max-h-150 overflow-hidden rounded-xl"
       >
           {images.map((imgSrc, i) => {
             const isActive = i === current;
             const isPrev = i === current - direction; // 用來決定退出方向（可選）
             return (
               <div
-                className="absolute inset-0 flex items-center justify-center"
+                className="absolute inset-0 flex items-center justify-center pointer-events-none"
               >
                 <motion.img
                   key={imgSrc}
