@@ -3,7 +3,7 @@
 // ========================================
 
 export const siteConfig = {
-  title: '阿峰雕塑 (絲瓜連夢露、蒜頭超人作者)',
+  title: '阿峰雕塑',
   description: '',
   author: '阿峰',
 };
@@ -11,11 +11,8 @@ export const siteConfig = {
 export const aboutData = {
   name: '阿峰',
   photo: '/images/profile.webp',
-  story: `我是一位專注於大型公共水泥雕塑的創作者。多年來，我以水泥為媒材，在雲林的各個角落留下了我的作品。
-
-每一件雕塑都源自對空間、自然與人文的深刻觀察。我相信，公共藝術不僅是裝飾，更是一座雲林的靈魂印記。
-
-從最初的構想、泥塑模型，到最終的水泥澆灌與打磨，每一步都傾注了我的心血。我希望透過這些作品，讓每個經過的人都能感受到藝術的力量。`,
+  story: `嗨👋，我阿峰啦！  
+如果你去過古坑綠色隧道，有看到那個造型奇特的絲瓜小姐，對，那個就是我做的，然後它的原名是絲瓜蓮夢露。`,
   email: 'yunlin.eason@gmail.com',
   social: {
     instagram: 'https://www.instagram.com/eason_li_0701',
