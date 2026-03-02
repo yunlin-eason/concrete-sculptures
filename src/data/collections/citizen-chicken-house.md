@@ -1,7 +1,7 @@
 ---
 title: "人民雞舍群像"
 location: "三結社區人民雞舍, 斗南鎮, 雲林縣"
-locationUrl: "https://maps.app.goo.gl/tFxsJXKaVgFzb6wK7"
+locationUrl: "https://maps.app.goo.gl/g8b774BvqxMTzFEL6"
 excerpt: "待補"
 works:
   - slug: "rooster-on-the-hub"

@@ -10,7 +10,6 @@ const workEntrySchema = z.object({
   slug: z.string(),
   title: z.string().optional(),
   description: z.string().optional().default(''),
-  location: z.string().optional(),
   locationUrl: z.string().optional(),
   coverPosition: coverPositionSchema.optional().default({ x: 50, y: 50 }),
 });

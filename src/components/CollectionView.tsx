@@ -7,7 +7,6 @@ interface WorkData {
   description: string;
   images: string[];
   cover: string;
-  location?: string;
   locationUrl?: string;
 }
 
@@ -76,8 +75,8 @@ export function CollectionView({
 
   if (!activeWork) return null;
 
-  // Work location overrides collection location
-  const effectiveLocation = activeWork.location || collectionLocation || '';
+  // Work locationUrl overrides collection locationUrl; location always from collection
+  const effectiveLocation = collectionLocation || '';
   const effectiveLocationUrl = activeWork.locationUrl || collectionLocationUrl || '';
 
   return (

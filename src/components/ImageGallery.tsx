@@ -150,9 +150,9 @@ export function ImageGallery({
       <div className="group relative w-full aspect-4/3 max-h-150 overflow-hidden rounded-xl">
 
         <div
-        key={images.join(',')}
-        className="relative w-full aspect-4/3 max-h-150 overflow-hidden rounded-xl"
-      >
+          key={images.join(',')}
+          className="relative w-full aspect-4/3 max-h-150 overflow-hidden rounded-xl"
+        >
           {images.map((imgSrc, i) => {
             const isActive = i === current;
             const isPrev = i === current - direction; // 用來決定退出方向（可選）
@@ -250,29 +250,29 @@ export function ImageGallery({
       </div>
 
       {/* 圓點指示器：放在圖片下方 */}
-      {images.length > 1 && (
-        <div className="mt-3 flex items-center justify-center gap-2">
-          {images.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => {
-                setDirection(i > current ? 1 : -1);
-                setCurrent(i);
-              }}
-              aria-label={`跳至第 ${i + 1} 張`}
-              className="rounded-full transition-all duration-300 focus:outline-none"
-              style={{
-                width: i === current ? '10px' : '8px',
-                height: i === current ? '10px' : '8px',
-                backgroundColor: i === current ? 'var(--primary)' : 'oklch(from var(--muted-foreground) l c h / 0.4)',
-                boxShadow: i === current
-                  ? '0 0 0 2px var(--background), 0 0 8px 1px (var(--foreground))'
-                  : 'none',
-              }}
-            />
-          ))}
-        </div>
-      )}
+
+      <div className="mt-3 flex items-center justify-center gap-2">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => {
+              setDirection(i > current ? 1 : -1);
+              setCurrent(i);
+            }}
+            aria-label={`跳至第 ${i + 1} 張`}
+            className="rounded-full transition-all duration-300 focus:outline-none"
+            style={{
+              width: i === current ? '10px' : '8px',
+              height: i === current ? '10px' : '8px',
+              backgroundColor: i === current ? 'var(--primary)' : 'oklch(from var(--muted-foreground) l c h / 0.4)',
+              boxShadow: i === current
+                ? '0 0 0 2px var(--background), 0 0 8px 1px (var(--foreground))'
+                : 'none',
+            }}
+          />
+        ))}
+      </div>
+
     </div>
   );
 }

@@ -1,6 +1,6 @@
 ---
 title: "西瓜王子"
-location: "安和社區"
+location: "安和社區, 東勢鄉, 雲林縣"
 locationUrl: "https://maps.app.goo.gl/eAPbP4yh3oSmPB1R6"
 excerpt: "待補"
 works:

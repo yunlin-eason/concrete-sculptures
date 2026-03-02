@@ -1,7 +1,7 @@
 ---
-title: "豐榮國小"
-location: "豐榮國小"
-locationUrl: ""
+title: "豐榮國小裝置藝術"
+location: "豐榮國小, 崙背鄉, 雲林縣"
+locationUrl: "https://maps.app.goo.gl/jp7WE98vvfUFZ79d9"
 excerpt: "待補"
 works:
   - slug: "cat-sink"

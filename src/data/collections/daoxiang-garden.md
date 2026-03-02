@@ -1,7 +1,7 @@
 ---
 title: "稻香園群像"
 location: "三結社區稻香園, 斗南鎮, 雲林縣"
-locationUrl: "https://maps.app.goo.gl/tFxsJXKaVgFzb6wK7"
+locationUrl: "https://maps.app.goo.gl/cDEDXP8uEf8KagKz8"
 excerpt: "待補"
 works:
   - slug: "banana-bench"

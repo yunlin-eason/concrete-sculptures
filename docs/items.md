@@ -12,8 +12,8 @@
 | 蚵寮烏魚子           | 1    |          | https://maps.app.goo.gl/Dhbd9YKDrvbhq86bA |
 | 巨大石龜             | 1    | 石龜     | https://maps.app.goo.gl/iureF6XYEcNNoTqq7 |
 | 樂高多拉A夢          | 1    | 麥寮     | https://maps.app.goo.gl/31uNPihzvpsSuNzy8 |
-| 客家文化館開口獅小子 | 2    | 崙背     | https://maps.app.goo.gl/2FvsyEADWAApmPTP9 |
-| 崙背乳牛三太子       | 1    |          | https://maps.app.goo.gl/AXyCN72buGNxgpsT9 |
+| 開口獅小子 | 2    | 崙背     | https://maps.app.goo.gl/2FvsyEADWAApmPTP9 |
+| 乳牛三太子       | 1    |          | https://maps.app.goo.gl/AXyCN72buGNxgpsT9 |
 | 扶朝乳牛             | 1    | 扶朝     | ??                                        |
 | 扶朝牛小子           | 1    | 扶朝     | ??                                        |
 | 崙背農夫             | 2    | 崙背豐榮 | ?                                         |

@@ -1,6 +1,7 @@
 ---
 title: "美生菜小子"
-location: "崙背新豐社區"
+location: "新豐社區, 崙背鄉, 雲林縣"
+locationUrl: "https://maps.app.goo.gl/yFm4yAgrHbuMK7op7"
 excerpt: "待補"
 works:
   - slug: "lettuce-kid"
