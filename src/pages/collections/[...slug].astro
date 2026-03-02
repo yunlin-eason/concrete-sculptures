@@ -1,0 +1,128 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { CollectionView } from '../../components/CollectionView';
+import { getWorkImages, getWorkCover, detectWorkSlugs } from '../../lib/images';
+
+export async function getStaticPaths() {
+  const allCollections = await getCollection('collections');
+
+  const paths: { params: { slug: string }; props: any }[] = [];
+
+  for (const collection of allCollections) {
+    // Determine work slugs from frontmatter or auto-detect
+    let workSlugs = collection.data.works.map((w) => w.slug);
+    if (workSlugs.length === 0) {
+      workSlugs = detectWorkSlugs(collection.id);
+    }
+    if (workSlugs.length === 0) {
+      workSlugs = [collection.id]; // fallback: use collection slug
+    }
+
+    // Build work data with images
+    const worksData = workSlugs.map((ws) => {
+      const workEntry = collection.data.works.find((w) => w.slug === ws);
+      return {
+        slug: ws,
+        title: workEntry?.title || collection.data.title,
+        description: workEntry?.description || '',
+        images: getWorkImages(collection.id, ws),
+        imageSettings: workEntry?.imageSettings || {},
+        cover: getWorkCover(collection.id, ws),
+        location: workEntry?.location,
+        locationUrl: workEntry?.locationUrl,
+      };
+    });
+
+    // Main collection route: /collections/{slug}/
+    paths.push({
+      params: { slug: collection.id },
+      props: { collection, worksData, activeWorkSlug: undefined },
+    });
+
+    // Individual work routes: /collections/{slug}/{work-slug}/
+    // (only for multi-work collections)
+    if (worksData.length > 1) {
+      for (const work of worksData) {
+        paths.push({
+          params: { slug: `${collection.id}/${work.slug}` },
+          props: { collection, worksData, activeWorkSlug: work.slug },
+        });
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { collection, worksData, activeWorkSlug } = Astro.props;
+const { Content } = await render(collection);
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
+const pieces = worksData.length;
+---
+
+<Layout title={collection.data.title} description={collection.data.excerpt}>
+  <article class="mx-auto max-w-4xl px-4 py-12">
+    <!-- Back -->
+    <a
+      href={`${base}#works`}
+      class="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      返回作品集
+    </a>
+
+    <!-- Meta -->
+    <header class="mb-8">
+      <h1 class="mb-4 text-4xl font-bold tracking-tight">{collection.data.title}</h1>
+      <div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+        <span>{pieces} 件</span>
+        {collection.data.locationUrl && collection.data.locationUrl.startsWith('http') ? (
+          <a
+            href={collection.data.locationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 text-primary hover:underline"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            {collection.data.location}
+          </a>
+        ) : collection.data.location ? (
+          <span class="inline-flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            {collection.data.location}
+          </span>
+        ) : null}
+      </div>
+    </header>
+
+    <!-- Interactive Collection View (React Island) -->
+    <CollectionView
+      client:load
+      collectionSlug={collection.id}
+      collectionTitle={collection.data.title}
+      collectionLocation={collection.data.location}
+      collectionLocationUrl={collection.data.locationUrl}
+      works={worksData}
+      base={base}
+      initialWorkSlug={activeWorkSlug}
+    />
+
+    <!-- Content (from markdown body) -->
+    <div class="prose prose-neutral mt-8 max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-primary prose-img:rounded-xl">
+      <Content />
+    </div>
+
+    <!-- Back to top -->
+    <div class="mt-12 border-t pt-8">
+      <a
+        href={`${base}#works`}
+        class="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        返回作品集
+      </a>
+    </div>
+  </article>
+</Layout>

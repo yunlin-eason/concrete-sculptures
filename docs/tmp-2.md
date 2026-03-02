@@ -1,0 +1,10 @@
+- collection card hover 滾動改成向右出去由左進來
+- ImageGallery有一個問題，我覺得進入一個collection Page後，先把該頁面下所有work的images在背景load...不然切換時gallary那個image component的大小會變來變去(最好改變大小時，可以有動畫而不是突然改變)，如果真的load很慢，用戶切過去了，也不要一下子變成default大小的那個沒有圖片，而是顯示一個正在Loading的符號，然後image的大小不要變，切過去前如果有一個image那就先用那個大小當placeholder，直到load好或是沒有圖片，沒有圖片就維持那個大小。
+- ImageGallery 下一頁和上一頁也應該是用左右進出的效果
+- 可以用motion library
+- collection card上面要有件數，但不是用資料手動輸入件數，而是去讀這個collection下有幾個works...
+- collection有location & location url. work 也可以有location & location url (optional). work 的會複寫collection的
+- 我已經請拿掉content.config.ts 下 _collections 的 pieces field了，請檢查其他地方有沒有用到這個field，請刪除(.md裡面的也請刪除)
+- collection card要顯示件數、地點和excerpt
+- 最後我在想，如果用git上傳圖片，好像會有點大，有什麼建議嗎?把建議寫在`docs/image-advice.md`
+- 工作完畢後，先不要上傳git

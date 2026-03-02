@@ -1,0 +1,50 @@
+---
+import { collectionsOrder } from "@/data/collectionsOrder";
+import { CollectionCard } from "./CollectionCard";
+import { getCollectionCovers, detectWorkSlugs } from "@/lib/images";
+
+import type { CollectionEntry } from "astro:content";
+interface Props {
+  collections: CollectionEntry<"collections">[];
+}
+const { collections } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+
+const orderMap = new Map(collectionsOrder.map((slug, i) => [slug, i]));
+const sorted = [...collections].sort((a, b) => {
+  const ia = orderMap.get(a.id) ?? 9999;
+  const ib = orderMap.get(b.id) ?? 9999;
+  return ia - ib;
+});
+
+// Pre-compute covers for each collection
+const collectionsWithCovers = sorted.map((col) => {
+  let workSlugs = col.data.works.map((w) => w.slug);
+  if (workSlugs.length === 0) workSlugs = detectWorkSlugs(col.id);
+  if (workSlugs.length === 0) workSlugs = [col.id];
+  const covers = getCollectionCovers(col.id, workSlugs);
+  return { collection: col, covers, worksCount: workSlugs.length };
+});
+---
+
+<section id="works" class="bg-muted/40 py-20">
+  <div class="container mx-auto max-w-5xl px-4">
+    <h2 class="mb-12 text-center text-3xl font-bold tracking-tight">作品集</h2>
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        collectionsWithCovers.map(({ collection: col, covers, worksCount }) => (
+          <CollectionCard
+            client:visible
+            title={col.data.title}
+            covers={covers}
+            href={`${base}collections/${col.id}/`}
+            base={base}
+            worksCount={worksCount}
+            location={col.data.location}
+            excerpt={col.data.excerpt}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
