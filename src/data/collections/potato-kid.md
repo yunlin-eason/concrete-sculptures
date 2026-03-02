@@ -5,6 +5,7 @@ locationUrl: "https://maps.app.goo.gl/3BLorAZ6AoqdaoPb6"
 excerpt: "待補"
 works:
   - slug: "potato-kid"
+    coverPosition: {x: 0, y: 25}
 ---
 
 待補

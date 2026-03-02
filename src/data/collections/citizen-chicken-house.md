@@ -6,6 +6,7 @@ excerpt: "待補"
 works:
   - slug: "rooster-on-the-hub"
     title: "茅草屋頂的公雞"
+    coverPosition: {x: 0, y: 30}
   - slug: "radish"
     title: "開心蘿蔔"
   - slug: "chili-bench"

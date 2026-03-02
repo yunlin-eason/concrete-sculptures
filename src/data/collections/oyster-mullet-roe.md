@@ -5,6 +5,7 @@ locationUrl: "https://maps.app.goo.gl/Dhbd9YKDrvbhq86bA"
 excerpt: "待補"
 works:
   - slug: "oyster-mullet-roe"
+    coverPosition: {x: 0, y: 20}
 ---
 
 待補

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -10,6 +10,8 @@ interface ImageGalleryProps {
 
 type LoadState = 'loading' | 'loaded' | 'error';
 
+const SWIPE_THRESHOLD = 40;
+
 export function ImageGallery({
   images,
   base,
@@ -19,6 +21,9 @@ export function ImageGallery({
   const [direction, setDirection] = useState(0);
   const [loadStates, setLoadStates] = useState<Record<string, LoadState>>({});
   const [transitioning, setTransitioning] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const swiping = useRef(false);
   const resolveUrl = (src: string) =>
     src.startsWith('/') ? `${base}${src.slice(1)}` : src;
 
@@ -62,6 +67,37 @@ export function ImageGallery({
     setCurrent((c) => Math.min(c + 1, images.length - 1));
   }, [images.length]);
 
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    swiping.current = false;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const dx = e.touches[0].clientX - touchStartX.current;
+    const dy = e.touches[0].clientY - touchStartY.current;
+    // Lock to horizontal swipe once threshold is reached
+    if (!swiping.current && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+      swiping.current = true;
+    }
+    if (swiping.current) {
+      e.preventDefault();
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (swiping.current) {
+      if (dx < -SWIPE_THRESHOLD) next();
+      else if (dx > SWIPE_THRESHOLD) prev();
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+    swiping.current = false;
+  }, [next, prev]);
+
   if (!images.length) {
     return (
       <div className="flex aspect-4/3 w-full items-center justify-center rounded-xl bg-muted text-muted-foreground">
@@ -92,7 +128,13 @@ export function ImageGallery({
     <div className="relative w-full select-none">
       <div className="group relative w-full aspect-4/3 max-h-150 overflow-hidden rounded-xl">
 
-        <div key={images.join(',')} className="relative w-full aspect-4/3 max-h-150 overflow-hidden rounded-xl">
+        <div
+        key={images.join(',')}
+        className="relative w-full aspect-4/3 max-h-150 overflow-hidden rounded-xl touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
           {images.map((imgSrc, i) => {
             const isActive = i === current;
             const isPrev = i === current - direction; // 用來決定退出方向（可選）

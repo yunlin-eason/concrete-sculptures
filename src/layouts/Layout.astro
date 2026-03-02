@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { siteConfig } from '../data/site';
+import { siteConfig, gaId } from '../data/site';
 
 interface Props {
   title?: string;
@@ -21,6 +21,17 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     <meta name="description" content={pageDesc} />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <title>{pageTitle}</title>
+    {gaId && (
+      <Fragment>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </Fragment>
+    )}
   </head>
   <body class="min-h-screen bg-background text-foreground antialiased">
     <slot />

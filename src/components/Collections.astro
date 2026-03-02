@@ -1,7 +1,7 @@
 ---
 import { collectionsOrder } from "@/data/collectionsOrder";
 import { CollectionCard } from "./CollectionCard";
-import { getCollectionCovers, detectWorkSlugs } from "@/lib/images";
+import { getWorkCover, detectWorkSlugs } from "@/lib/images";
 
 import type { CollectionEntry } from "astro:content";
 interface Props {
@@ -17,13 +17,25 @@ const sorted = [...collections].sort((a, b) => {
   return ia - ib;
 });
 
-// Pre-compute covers for each collection
+// Pre-compute covers + positions for each collection
 const collectionsWithCovers = sorted.map((col) => {
   let workSlugs = col.data.works.map((w) => w.slug);
   if (workSlugs.length === 0) workSlugs = detectWorkSlugs(col.id);
   if (workSlugs.length === 0) workSlugs = [col.id];
-  const covers = getCollectionCovers(col.id, workSlugs);
-  return { collection: col, covers, worksCount: workSlugs.length };
+  const paired = workSlugs
+    .map((ws) => {
+      const cover = getWorkCover(col.id, ws);
+      const work = col.data.works.find((w) => w.slug === ws);
+      const position = work?.coverPosition ?? { x: 50, y: 50 };
+      return cover ? { cover, position } : null;
+    })
+    .filter(Boolean) as { cover: string; position: { x: number; y: number } }[];
+  return {
+    collection: col,
+    covers: paired.map((p) => p.cover),
+    coverPositions: paired.map((p) => p.position),
+    worksCount: workSlugs.length,
+  };
 });
 ---
 
@@ -32,11 +44,12 @@ const collectionsWithCovers = sorted.map((col) => {
     <h2 class="mb-12 text-center text-3xl font-bold tracking-tight">作品集</h2>
     <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {
-        collectionsWithCovers.map(({ collection: col, covers, worksCount }) => (
+        collectionsWithCovers.map(({ collection: col, covers, coverPositions, worksCount }) => (
           <CollectionCard
             client:visible
             title={col.data.title}
             covers={covers}
+            coverPositions={coverPositions}
             href={`${base}collections/${col.id}/`}
             base={base}
             worksCount={worksCount}

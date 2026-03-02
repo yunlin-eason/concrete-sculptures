@@ -27,7 +27,6 @@ export async function getStaticPaths() {
         title: workEntry?.title || collection.data.title,
         description: workEntry?.description || '',
         images: getWorkImages(collection.id, ws),
-        imageSettings: workEntry?.imageSettings || {},
         cover: getWorkCover(collection.id, ws),
         location: workEntry?.location,
         locationUrl: workEntry?.locationUrl,

@@ -1,10 +1,9 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-const imageSettingsSchema = z.object({
-  fit: z.enum(['contain', 'cover', 'fill', 'none']).default('contain'),
-  position: z.string().default('center'),
-  scale: z.number().default(1),
+const coverPositionSchema = z.object({
+  x: z.number().min(0).max(100).default(50),
+  y: z.number().min(0).max(100).default(50),
 });
 
 const workEntrySchema = z.object({
@@ -13,7 +12,7 @@ const workEntrySchema = z.object({
   description: z.string().optional().default(''),
   location: z.string().optional(),
   locationUrl: z.string().optional(),
-  imageSettings: z.record(z.string(), imageSettingsSchema).optional().default({}),
+  coverPosition: coverPositionSchema.optional().default({ x: 50, y: 50 }),
 });
 
 const _collections = defineCollection({

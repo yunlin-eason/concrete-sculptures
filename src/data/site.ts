@@ -23,6 +23,9 @@ export const aboutData = {
   },
 };
 
+// Google Analytics 4 Measurement ID — 留空字串則不載入 GA
+export const gaId = 'G-0Q96DHJVRJ';
+
 // Google My Maps embed URL — 用你自己的「自建地圖」嵌入連結替換
 export const mapEmbedUrl =
   'https://www.google.com/maps/d/embed?mid=1-KpbyO9ebomJz-vfM4_1nYBkRzlNi58&ehbc=2E312F';

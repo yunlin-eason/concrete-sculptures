@@ -5,6 +5,7 @@ locationUrl: "https://maps.app.goo.gl/cGKJrCXSijKTZeVR7"
 excerpt: "待補"
 works:
   - slug: "peanut-kid"
+    coverPosition: {x: 0, y: 25}
 ---
 
 待補

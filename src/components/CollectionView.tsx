@@ -1,18 +1,11 @@
 import { useState, useEffect } from 'react';
 import { ImageGallery } from './ImageGallery';
 
-// interface ImageSettings {
-//   fit?: 'contain' | 'cover' | 'fill' | 'none';
-//   position?: string;
-//   scale?: number;
-// }
-
 interface WorkData {
   slug: string;
   title: string;
   description: string;
   images: string[];
-  // imageSettings: Record<string, ImageSettings>;
   cover: string;
   location?: string;
   locationUrl?: string;
@@ -93,7 +86,6 @@ export function CollectionView({
       <div className="mb-8">
         <ImageGallery
           images={activeWork.images}
-          // imageSettings={activeWork.imageSettings}
           base={base}
           alt={activeWork.title || collectionTitle}
         />

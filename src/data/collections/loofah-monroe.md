@@ -6,8 +6,10 @@ excerpt: "待補"
 works:
   - slug: "loofah-monroe"
     title: "絲瓜蓮夢露"
+    coverPosition: {x: 0, y: 35}
   - slug: "loofah-kid"
     title: "絲瓜小子"
+    coverPosition: {x: 0, y: 35}
 ---
 
 待補

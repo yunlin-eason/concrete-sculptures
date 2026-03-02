@@ -6,10 +6,12 @@ excerpt: "待補"
 works:
   - slug: "thumbs-up-cattle"
     title: "比讚牛"
+    coverPosition: {x: 0, y: 35}
   - slug: "hakka-blossom-buffalo"
     title: "花布牛"
   - slug: "cow"
     title: "乳牛"
+    coverPosition: {x: 0, y: 30}
 ---
 
 待補

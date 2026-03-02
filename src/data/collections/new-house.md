@@ -5,5 +5,6 @@ excerpt: "待補"
 works:
   - slug: "new-house"
     title: "新厝仔意象"
+    coverPosition: {x: 0, y: 20}
 ---
 待補

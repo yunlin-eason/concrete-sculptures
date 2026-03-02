@@ -5,6 +5,7 @@ locationUrl: "https://maps.app.goo.gl/ybCXXFMwexBjxGfB8"
 excerpt: "待補"
 works:
   - slug: "meatball-kid"
+    coverPosition: {x: 0, y: 30}
 ---
 
 待補
