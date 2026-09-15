@@ -125,10 +125,10 @@
 }
 
 .literature-prose {
-  /* font-size: 1.0625rem; */
+  font-size: 1.0625rem;
   
-  line-height: 1.35;
-  letter-spacing: 0.025em;
+  line-height: 1.45;
+  letter-spacing: 0.03em;
 }
 
 .literature-prose p {
