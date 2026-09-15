@@ -1,0 +1,20 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import LiteratureHeader from '../../components/LiteratureHeader.astro';
+import manuscript from '../../data/literature/renart.md?raw';
+
+export async function getStaticPaths() {
+  return [{ params: { slug: 'renart' } }];
+}
+
+const paragraphs = manuscript.trim().split(/\n\s*\n/);
+---
+
+<Layout title="雷納德" siteTitle="阿峰文學" dark>
+  <LiteratureHeader isArticle />
+  <main class="mx-auto max-w-2xl px-6 py-16 sm:px-8 sm:py-24">
+    <article class="literature-prose">
+      {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </article>
+  </main>
+</Layout>

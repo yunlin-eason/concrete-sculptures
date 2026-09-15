@@ -123,3 +123,13 @@
     @apply bg-background text-foreground;
     }
 }
+
+.literature-prose {
+  font-size: 1.0625rem;
+  line-height: 2;
+  letter-spacing: 0.025em;
+}
+
+.literature-prose p {
+  margin: 0 0 1.75em;
+}
