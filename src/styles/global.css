@@ -82,8 +82,8 @@
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
+    --background: oklch(.2 0.00003 271.152);
+    --foreground: oklch(0.93 0 0);
     --card: oklch(0.205 0 0);
     --card-foreground: oklch(0.985 0 0);
     --popover: oklch(0.205 0 0);
@@ -125,8 +125,9 @@
 }
 
 .literature-prose {
-  font-size: 1.0625rem;
-  line-height: 2;
+  /* font-size: 1.0625rem; */
+  
+  line-height: 1.35;
   letter-spacing: 0.025em;
 }
 
