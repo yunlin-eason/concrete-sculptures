@@ -1,4 +1,5 @@
 export const collectionsOrder: string[] = [
+  'honeybee-kid',         // 蜜蜂小子
   'loofah-monroe',        // 絲瓜連夢露
   'garlic-superman',      // 蒜頭超人
   'qianqiaogu-cows',     // 千巧谷乳牛
