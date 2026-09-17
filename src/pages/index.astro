@@ -8,11 +8,40 @@ import MapSection from "../components/MapSection.astro";
 import Footer from "../components/Footer.astro";
 
 const collections = await getCollection("collections");
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 
 <Layout>
     <Header />
     <main>
+        <section class="mx-auto w-full max-w-5xl px-4 py-4 sm:py-6" aria-label="推薦商品">
+            <div class="grid gap-4 sm:gap-6">
+                <a
+                    href="https://liveintheforest.com/%E5%93%81%E7%89%8C/%e5%9c%a8%e6%a3%ae%e6%9e%97%e9%82%a3%e9%82%8a/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block overflow-hidden rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                    <img
+                        src={`${base}images/banners/live-in-the-forest.jpg`}
+                        alt="在森林那邊"
+                        class="block h-auto w-full transition-transform duration-300 hover:scale-[1.01]"
+                    />
+                </a>
+                <a
+                    href="https://buyuseika.com/shop"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block overflow-hidden rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                    <img
+                        src={`${base}images/banners/buyu-seika.jpg`}
+                        alt="布嶼製菓"
+                        class="block h-auto w-full transition-transform duration-300 hover:scale-[1.01]"
+                    />
+                </a>
+            </div>
+        </section>
         <About />
         <Collections collections={collections} />
         <MapSection collections={collections} />
