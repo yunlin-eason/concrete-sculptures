@@ -36,8 +36,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
             const banner = event.target.closest('[data-ga-banner]');
             if (!banner) return;
 
-            gtag('event', 'banner_click', {
-              banner_name: banner.dataset.gaBanner,
+            gtag('event', `banner_click_${banner.dataset.gaBanner}`, {
               link_url: banner.href,
             });
           });
